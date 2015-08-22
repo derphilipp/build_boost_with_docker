@@ -3,6 +3,7 @@
 
 import option ;
 import feature ;
+import python ;
 
 # Compiler configuration. This definition will be used unless
 # you already have defined some toolsets in your user-config.jam
@@ -11,21 +12,20 @@ if ! gcc in [ feature.values <toolset> ]
 {
     using gcc ; 
 }
-
 project : default-build <toolset>gcc ;
 
 # Python configuration
-import python ;
-if ! [ python.configured ]
-{
-    using python 
+
+using python
     : 3.4  # version
     : /usr  # cmd-or-prefix
     : /usr/include/python3.4m #includes
     : #libraries
     : #condition
 ;
-}
+
+
+using mpi ;
 
 # List of --with-<library> and --without-<library>
 # options. If left empty, all libraries will be built.

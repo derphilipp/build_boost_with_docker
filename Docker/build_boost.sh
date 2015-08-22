@@ -26,13 +26,19 @@ tmp_dir="/tmp/boost/boost_${BOOST_MAJ_VERSION}_${BOOST_MIN_VERSION}_${BOOST_REL_
 
 # Overwrite the boost configuration file,
 # because python paths are not filled in otherwise
+rm /tmp/boost/stdout.log 2>/dev/null
+rm /tmp/boost/stderr.log 2>/dev/null
 
-cd /tmp/boost && \
-wget -c $dl_url && \
-tar -xvjf download && \
-cd $tmp_dir && \
-./bootstrap.sh $bootstrap_options && \
-cp -f /tmp/project-config.jam $tmp_dir && \
-./b2 install $b2_options && \
-echo "All done"
+cd /tmp/boost                                   > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
+echo "Starting Download"
+wget -c $dl_url                                 > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
+echo "Starting Extracting"
+tar -xvjf download                              > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
+cd $tmp_dir                                     > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
+echo "Starting Bootstrap"
+./bootstrap.sh $bootstrap_options               > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
+cp -f /tmp/project-config.jam $tmp_dir          > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
+echo "Starting Compilation"
+./b2 install $b2_options                        > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
+echo "All done"                                 > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
 
