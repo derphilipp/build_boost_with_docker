@@ -4,14 +4,16 @@ FROM centos:latest
 RUN yum -y update
 RUN yum -y upgrade
 RUN yum -y install epel-release
-RUN yum -y install deltarpm
 RUN yum -y groupinstall "Development Tools"
+# Install "old" boost including all dependencies
+RUN yum -y install boost* 
+# Remove boost, so the dependencies remain
+RUN yum -y remove  boost*
 RUN yum -y install wget
+# Python 3
 RUN yum -y install python34 python34-devel
-RUN yum -y install icu libicu libicu-devel 
-RUN yum -y install openmpi-devel mpich-devel 
-RUN yum -y install zlib zlib-devel zlib-static
-RUN yum -y install openmpi
+# Dependencies for building
+RUN yum -y install icu libicu libicu-devel bzip2-devel texinfo zlib zlib-devel zlib-static openmpi openmpi-devel mpich-devel
 
 #boost-mpich boost-mpich-devel boost-openmpi boost-openmpi-devel
 RUN mkdir /tmp/boost

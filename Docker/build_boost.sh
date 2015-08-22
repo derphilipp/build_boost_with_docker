@@ -5,12 +5,14 @@ BOOST_MIN_VERSION=59
 BOOST_REL_VERSION=0
 
 bootstrap_options=""
-bootstrap_options+="--with-python-version=3.4 "
-bootstrap_options+="--with-python=/usr/bin/python3.4 "
+bootstrap_options+=" --with-python-version=3.4"
+bootstrap_options+=" --with-python=/usr/bin/python3.4"
+bootstrap_options+=" --with-icu"
 
 b2_options=""
-b2_options+="--prefix=/usr/local "
-b2_options+="-j8 "
+b2_options+=" --prefix=/usr/local"
+b2_options+=" -a"
+b2_options+=" -j8"
 
 
 
@@ -24,11 +26,11 @@ dl_url="${sf_url}${BOOST_MAJ_VERSION}.${BOOST_MIN_VERSION}.${BOOST_REL_VERSION}/
 tmp_dir="/tmp/boost/boost_${BOOST_MAJ_VERSION}_${BOOST_MIN_VERSION}_${BOOST_REL_VERSION}/"
 
 
-# Overwrite the boost configuration file,
-# because python paths are not filled in otherwise
 rm /tmp/boost/stdout.log 2>/dev/null
 rm /tmp/boost/stderr.log 2>/dev/null
 
+# Overwrite the boost configuration file,
+# because python paths are not filled in otherwise
 cd /tmp/boost                                   > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
 echo "Starting Download"
 wget -c $dl_url                                 > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
