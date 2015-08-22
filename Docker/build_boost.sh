@@ -31,16 +31,16 @@ rm /tmp/boost/stderr.log 2>/dev/null
 
 # Overwrite the boost configuration file,
 # because python paths are not filled in otherwise
-cd /tmp/boost                                   > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
-echo "Starting Download"
-wget -c $dl_url                                 > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
-echo "Starting Extracting"
-tar -xvjf download                              > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
-cd $tmp_dir                                     > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
-echo "Starting Bootstrap"
-./bootstrap.sh $bootstrap_options               > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
-cp -f /tmp/project-config.jam $tmp_dir          > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
-echo "Starting Compilation"
-./b2 install $b2_options                        > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
-echo "All done"                                 > >(tee /tmp/boost/stdout.log) 2> >(tee /tmp/boost/stderr.log >&2)
+cd /tmp/boost                           >/tmp/boost/stdout.log  2>/tmp/boost/stderr.log && \
+echo "Starting Download"                                                                && \
+wget -c $dl_url                        >>/tmp/boost/stdout.log 2>>/tmp/boost/stderr.log && \
+echo "Starting Extracting"                                                              && \
+tar -xvjf download                     >>/tmp/boost/stdout.log 2>>/tmp/boost/stderr.log && \
+cd $tmp_dir                            >>/tmp/boost/stdout.log 2>>/tmp/boost/stderr.log && \
+echo "Starting Bootstrap"                                                               && \
+./bootstrap.sh $bootstrap_options      >>/tmp/boost/stdout.log 2>>/tmp/boost/stderr.log && \
+cp -f /tmp/project-config.jam $tmp_dir >>/tmp/boost/stdout.log 2>>/tmp/boost/stderr.log && \
+echo "Starting Compilation"                                                             && \
+./b2 install $b2_options               >>/tmp/boost/stdout.log 2>>/tmp/boost/stderr.log && \
+echo "All done"                        >>/tmp/boost/stdout.log 2>>/tmp/boost/stderr.log
 
