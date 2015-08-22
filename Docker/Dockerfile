@@ -6,9 +6,9 @@ RUN yum -y upgrade
 RUN yum -y install epel-release
 RUN yum -y groupinstall "Development Tools"
 # Install "old" boost including all dependencies
-RUN yum -y install boost* 
-# Remove boost, so the dependencies remain
-RUN yum -y remove  boost*
+# Then remove boost, so the dependencies remain
+RUN yum -y install boost*  && \
+    yum -y remove  boost*
 RUN yum -y install wget
 # Python 3
 RUN yum -y install python34 python34-devel
