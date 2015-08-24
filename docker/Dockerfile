@@ -20,10 +20,10 @@ RUN mkdir /tmp/boost
 
 # Add configuration script to target, as python paths are not correctly configured
 ADD project-config.jam /tmp/project-config.jam
-ADD build_boost.sh /tmp/build_boost.sh
+ADD build.sh /tmp/build.sh
 
 # Run this script to build boost
 #CMD /bin/bash
 
 ENV PATH /usr/lib64/openmpi/bin/:$PATH
-CMD /tmp/build_boost.sh
+CMD /tmp/build.sh
